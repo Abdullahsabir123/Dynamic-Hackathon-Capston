@@ -35,7 +35,7 @@ const HeroCard = () => {
       <div className="flex justify-between items-center w-[280px] md:w-[760px] h-[36px] md:h-[44px] ml-9 md:ml-[560px] mt-8 px-4">
         <Link href="/Category">
           <button className="bg-[#3563e9] text-white text-base font-semibold rounded px-5 py-2 flex justify-center items-center">
-            Show more car
+            Show more cars
           </button>
         </Link>
 

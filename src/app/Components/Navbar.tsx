@@ -7,6 +7,10 @@ import { IoMdHeart } from "react-icons/io";
 import { RiSearch2Line } from "react-icons/ri";
 import { VscSettings } from "react-icons/vsc";
 import Link from 'next/link';
+import {
+  SignInButton,
+  UserButton
+} from '@clerk/nextjs'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,14 +50,15 @@ export default function Navbar() {
         <input
           type="text"
           placeholder="Search something here"
-          className="w-full h-full bg-white rounded-[70px] border border-[#c3d4e9]/40 pl-10 pr-10 text-[#596780] text-sm font-medium"/>
+          className="w-full h-full bg-white rounded-[70px] border border-[#c3d4e9]/40 pl-10 pr-10 text-[#596780] text-sm font-medium" />
         <RiSearch2Line className="absolute w-6 h-6 left-2 top-1/2 transform -translate-y-1/2 text-[#596780]" />
         <VscSettings className="absolute w-6 h-6 right-3 top-1/2 transform -translate-y-1/2 text-[#596780]" />
       </div>
 
       {/* Icons and Profile Picture */}
       <div className="flex items-center gap-5">
-
+        {/* Clerk SignIn button */}
+        <SignInButton />
         {/* Whishlist Icon */}
         <Link href="/Wishlist" className="relative w-11 h-11 hidden sm:flex">
           <IoMdHeart className="absolute w-6 h-6 left-[10px] top-[10px] text-[#596780]" />
@@ -68,36 +73,34 @@ export default function Navbar() {
         </div>
 
         {/* Settings Icon */}
-        <div className="relative w-11 h-11 hidden sm:flex">
+        <div className="relative w-11 h-11 hidden sm:flex" id="user-menu-button" aria-expanded={isOpen} onClick={toggleDropdown}>
           <IoSettingsSharp className="absolute w-6 h-6 left-[10px] top-[10px] text-[#596780]" />
           <div className="w-full h-full opacity-80 rounded-full border border-[#c3d4e9]/40" />
         </div>
 
         {/* Profile Picture */}
-            <div className="relative flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            {/* User Menu Button */}
-            <button
-              type="button"
-              className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              id="user-menu-button"
-              aria-expanded={isOpen}
-              onClick={toggleDropdown}
-            >
-              <span className="sr-only">Open user menu</span>
-              <Image src={ProfilePic} alt="Profile Picture" className="w-7 h-7 sm:w-11 sm:h-11 mt-[-100px] sm:mt-0 ml-64 sm:ml-0 rounded-full" />
-            </button>
+        <div className="relative flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          {/* User Menu Button */}
+          <button
+            type="button"
+            className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+          >
+            <span className="sr-only">Open user menu</span>
+            {/* <Image src={ProfilePic} alt="Profile Picture" className="w-7 h-7 sm:w-11 sm:h-11 mt-[-100px] sm:mt-0 ml-64 sm:ml-0 rounded-full" /> */}
+            <UserButton />
+          </button>
 
-            {/* Dropdown Menu */}
-            {isOpen && (
-              <div ref={dropdownRef} className="absolute top-full mt-[-70px] sm:mt-2 right-0 z-50 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-                <ul className="py-2" aria-labelledby="user-menu-button">
-                  <li>
-                    <a href="/Dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" >Dashboard</a>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
+          {/* Dropdown Menu */}
+          {isOpen && (
+            <div ref={dropdownRef} className="absolute top-full mt-[-70px] sm:mt-2 right-0 z-50 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+              <ul className="py-2" aria-labelledby="user-menu-button">
+                <li>
+                  <a href="/Dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" >Dashboard</a>
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
 
       </div>
     </div>
